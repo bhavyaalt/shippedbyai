@@ -306,11 +306,13 @@ export default function Home() {
             Looking to collaborate on Web3 projects, AI experiments, or just want to chat about the future of tech.
           </p>
           <a 
-            href="mailto:bhavya.gor9999@gmail.com"
+            href="https://calendly.com/bhavya-gor9999/30min"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-xl transition-colors"
           >
-            <Mail className="w-4 h-4" />
-            Get in Touch
+            <ExternalLink className="w-4 h-4" />
+            Book a Call
           </a>
         </div>
       </section>
