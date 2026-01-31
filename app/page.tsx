@@ -66,12 +66,12 @@ const hackathonWins = [
 
 const experience = [
   {
-    role: 'Founding Engineer',
+    role: 'Former Founding Engineer',
     company: 'niti.ai',
-    period: 'Oct 2022 - Present',
-    description: 'Second engineering hire. Building AI-driven SaaS for product managers - in-app marketing, analytics, and user engagement tools.',
+    period: 'Oct 2022 - Jan 2025',
+    description: 'Second engineering hire. Built AI-driven SaaS for product managers - in-app marketing, analytics, and user engagement tools.',
     url: 'https://www.niti.ai',
-    current: true,
+    current: false,
   },
   {
     role: 'Full Stack Developer',
@@ -131,14 +131,9 @@ export default function Home() {
             Bhavya Gor
           </h1>
           
-          <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mb-4">
-            Founding Engineer at <a href="https://niti.ai" className="text-white hover:text-orange-400 transition">niti.ai</a>. 
-            Building Web3 products and winning hackathons.
-          </p>
-          
-          <p className="text-lg text-zinc-500 max-w-2xl mb-8">
-            From Super Mario dreams in 2005 to shipping onchain products today. 
-            Curious developer who loves building things that matter.
+          <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mb-8">
+            Curious developer who loves building things. 
+            Shipping Web3 products and winning hackathons.
           </p>
           
           <div className="flex items-center gap-4 mb-12">

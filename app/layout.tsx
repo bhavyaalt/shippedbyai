@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Bhavya Gor | Founding Engineer & Web3 Developer',
-  description: 'Founding Engineer at niti.ai. Building Web3 products, winning hackathons, and shipping with AI agents. ETH India, Based India, ETH Bangkok winner.',
+  title: 'Bhavya Gor | Web3 Developer & Builder',
+  description: 'Curious developer building Web3 products, winning hackathons, and shipping with AI agents. ETH India, Based India, ETH Bangkok winner.',
   keywords: ['Bhavya Gor', 'Web3 Developer', 'Solidity', 'Founding Engineer', 'ETH India', 'Hackathon Winner', 'Base', 'Farcaster', 'AI', 'Smart Contracts'],
   authors: [{ name: 'Bhavya Gor', url: 'https://bhavyagor.com' }],
   creator: 'Bhavya Gor',
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://bhavyagor.com',
     siteName: 'Bhavya Gor',
-    title: 'Bhavya Gor | Founding Engineer & Web3 Developer',
-    description: 'Building Web3 products, winning hackathons, and shipping with AI agents.',
+    title: 'Bhavya Gor | Web3 Developer & Builder',
+    description: 'Curious developer building Web3 products, winning hackathons, and shipping with AI agents.',
     images: [
       {
         url: '/og-image.png',
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@bhavya_gor',
     creator: '@bhavya_gor',
-    title: 'Bhavya Gor | Founding Engineer & Web3 Developer',
-    description: 'Building Web3 products, winning hackathons, and shipping with AI agents.',
+    title: 'Bhavya Gor | Web3 Developer & Builder',
+    description: 'Curious developer building Web3 products, winning hackathons, and shipping with AI agents.',
   },
   robots: {
     index: true,
