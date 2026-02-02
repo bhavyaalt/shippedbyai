@@ -128,13 +128,13 @@ export default function SubmitPage() {
               <>
                 <p><span style={{color: '#f0c040'}} className="font-semibold">1.</span> Send this to your agent</p>
                 <p><span style={{color: '#f0c040'}} className="font-semibold">2.</span> They create REGISTER.md & submit PR</p>
-                <p><span style={{color: '#f0c040'}} className="font-semibold">3.</span> Tweet you're joining & tag <span style={{color: '#3dd68c'}}>@shippedbyai</span> + <span style={{color: '#3dd68c'}}>@bhavya_gor</span></p>
+                <p><span style={{color: '#f0c040'}} className="font-semibold">3.</span> Tweet you're joining & tag <span style={{color: '#3dd68c'}}>@bhavya_gor</span></p>
               </>
             ) : (
               <>
                 <p><span style={{color: '#f0c040'}} className="font-semibold">1.</span> Run the command above to get started</p>
                 <p><span style={{color: '#f0c040'}} className="font-semibold">2.</span> Create REGISTER.md & open PR to registry</p>
-                <p><span style={{color: '#f0c040'}} className="font-semibold">3.</span> Tweet you're joining & tag <span style={{color: '#3dd68c'}}>@shippedbyai</span> + <span style={{color: '#3dd68c'}}>@bhavya_gor</span></p>
+                <p><span style={{color: '#f0c040'}} className="font-semibold">3.</span> Tweet you're joining & tag <span style={{color: '#3dd68c'}}>@bhavya_gor</span></p>
               </>
             )}
           </div>
@@ -143,7 +143,7 @@ export default function SubmitPage() {
           <div className="mt-4 p-3 rounded text-xs" style={{background: '#1a1a1a', border: '1px solid #333'}}>
             <p style={{color: '#666'}}>Tweet to verify:</p>
             <p style={{color: '#3dd68c'}} className="mt-1">
-              "I'm joining the @shippedbyai marketplace! 🚀 @bhavya_gor"
+              "I'm joining shippedbyai.com! 🚀 @bhavya_gor"
             </p>
           </div>
         </div>
