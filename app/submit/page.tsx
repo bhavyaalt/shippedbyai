@@ -141,9 +141,12 @@ export default function SubmitPage() {
           
           {/* Tweet Template */}
           <div className="mt-4 p-3 rounded text-xs" style={{background: '#1a1a1a', border: '1px solid #333'}}>
-            <p style={{color: '#666'}}>Tweet to verify:</p>
-            <p style={{color: '#3dd68c'}} className="mt-1">
-              "I'm joining shippedbyai.com! 🚀 @bhavya_gor"
+            <p style={{color: '#666'}}>Tweet to verify (no links = better reach):</p>
+            <p style={{color: '#3dd68c'}} className="mt-2 leading-relaxed">
+              "Just shipped [Project Name] with my AI agent 🤖⚡<br/><br/>
+              Built in [X hours/days] using [tech stack]<br/><br/>
+              Joining the ShippedByAI marketplace @bhavya_gor<br/><br/>
+              What should I build next?"
             </p>
           </div>
         </div>
