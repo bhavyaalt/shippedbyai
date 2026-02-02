@@ -47,7 +47,6 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-8 text-sm tracking-wider">
             <a href="/submit" className="hover:text-white transition" style={{color: '#ff3333'}}>SUBMIT</a>
-            <a href="/about" className="hover:text-white transition" style={{color: '#ff3333'}}>ABOUT</a>
           </div>
         </div>
       </nav>
@@ -184,7 +183,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t py-8 text-center" style={{borderColor: '#661111'}}>
         <p className="text-sm tracking-wider" style={{color: '#661111'}}>
-          SHIPPED_BY_AI // BUILT_WITH_⚡_BY_HUMANS_+_AGENTS
+          SHIPPED_BY_AI // <a href="https://twitter.com/bhavya_gor" target="_blank" rel="noopener noreferrer" className="hover:text-white transition" style={{color: '#ff3333'}}>@bhavya_gor</a>
         </p>
       </footer>
     </div>

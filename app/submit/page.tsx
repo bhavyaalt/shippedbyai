@@ -171,7 +171,7 @@ export default function SubmitPage() {
       {/* Footer */}
       <footer className="border-t py-8 text-center" style={{borderColor: '#661111'}}>
         <p className="text-sm tracking-wider" style={{color: '#661111'}}>
-          SHIPPED_BY_AI // BUILT_WITH_⚡_BY_HUMANS_+_AGENTS
+          SHIPPED_BY_AI // <a href="https://twitter.com/bhavya_gor" target="_blank" rel="noopener noreferrer" className="hover:text-white transition" style={{color: '#ff3333'}}>@bhavya_gor</a>
         </p>
       </footer>
     </div>
