@@ -1,333 +1,302 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Github, Twitter, Linkedin, Mail, ExternalLink, Sparkles, Trophy, Briefcase, Code, Zap, Globe } from 'lucide-react';
+import { Search, Sparkles, Rocket, Filter, Plus, ArrowRight } from 'lucide-react';
+import { ProjectCard } from './components/ProjectCard';
+import type { Project } from './lib/supabase';
 
-const shippedWithAI = [
+// Demo data until Supabase is set up
+const demoProjects: Project[] = [
   {
-    name: 'CrabNews 🦀',
-    description: 'AI-generated news videos from Moltbook (Reddit for AI agents). Hourly viral content with HeyGen avatars.',
-    url: 'https://crabnews.shippedbyai.com',
-    twitter: 'https://x.com/crabnews_',
-    tags: ['HeyGen', 'Grok', 'Automation'],
+    id: '1',
+    name: 'CrabNews',
+    slug: 'crabnews',
+    tagline: 'AI-generated viral news videos from the Moltbook community',
+    description: 'Hourly viral content generation with HeyGen avatars. Automated news pipeline.',
+    category: 'agent',
+    tags: ['News', 'Video', 'Automation', 'Viral'],
+    website_url: 'https://crabnews.shippedbyai.com',
+    creator_name: 'Bhavya Gor',
+    creator_twitter: 'bhavya_gor',
+    tech_stack: ['HeyGen', 'Grok', 'Next.js'],
     status: 'live',
+    built_by_ai: true,
+    featured: true,
+    upvotes: 42,
+    screenshot_urls: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
   {
+    id: '2',
     name: 'Peer Credit Circles',
-    description: 'Decentralized peer-to-peer lending pools on Base. Farcaster mini app with 46 passing tests.',
-    url: 'https://pcc-miniapp.vercel.app',
-    github: 'https://github.com/bhavyaalt/peer-credit-circles',
-    tags: ['Solidity', 'Base', 'Farcaster'],
+    slug: 'pcc',
+    tagline: 'Decentralized peer-to-peer lending pools on Base',
+    description: 'Farcaster mini app with smart contract lending pools. 46 passing tests.',
+    category: 'platform',
+    tags: ['DeFi', 'Lending', 'Farcaster', 'Mini App'],
+    website_url: 'https://pcc-miniapp.vercel.app',
+    github_url: 'https://github.com/bhavyaalt/peer-credit-circles',
+    creator_name: 'Bhavya Gor',
+    creator_twitter: 'bhavya_gor',
+    onchain_address: '0x3A15E25Fed95d1092F593aD72B395835edec8ce6',
+    tech_stack: ['Solidity', 'Base', 'Next.js', 'Foundry'],
     status: 'live',
+    built_by_ai: true,
+    featured: true,
+    upvotes: 38,
+    screenshot_urls: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
   {
+    id: '3',
     name: 'MemeWars',
-    description: 'Meme battle prediction market. Brands sponsor battles, users create content, winners get paid.',
-    url: 'https://app-lemon-theta.vercel.app',
-    tags: ['Prediction Market', 'Base', 'UGC'],
+    slug: 'memewars',
+    tagline: 'Meme battle prediction market with brand sponsorships',
+    description: 'Users create memes, place predictions, winners get paid. Brands can sponsor battles.',
+    category: 'platform',
+    tags: ['Prediction Market', 'Memes', 'UGC', 'Gaming'],
+    website_url: 'https://app-lemon-theta.vercel.app',
+    creator_name: 'Bhavya Gor',
+    creator_twitter: 'bhavya_gor',
+    tech_stack: ['Base', 'Next.js', 'Solidity'],
     status: 'live',
+    built_by_ai: true,
+    featured: false,
+    upvotes: 24,
+    screenshot_urls: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
   {
+    id: '4',
     name: 'AI Prophet',
-    description: 'AI-powered prediction insights with on-chain betting.',
-    tags: ['AI', 'Predictions', 'Base Sepolia'],
-    status: 'deployed',
+    slug: 'ai-prophet',
+    tagline: 'AI-powered prediction insights with on-chain betting',
+    description: 'Get AI analysis on outcomes and place bets on-chain.',
+    category: 'agent',
+    tags: ['AI', 'Predictions', 'Betting'],
+    onchain_address: '0xca374b207f08194559d61ddf64d362ac658b8476',
+    creator_name: 'Bhavya Gor',
+    tech_stack: ['OpenAI', 'Base Sepolia', 'Solidity'],
+    status: 'beta',
+    built_by_ai: true,
+    featured: false,
+    upvotes: 15,
+    screenshot_urls: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: '5',
+    name: 'OpenClaw',
+    slug: 'openclaw',
+    tagline: 'The OS for AI agents — run Claude as a persistent daemon',
+    description: 'Give Claude a daemon, memory, and tools. Build agents that persist and act autonomously.',
+    category: 'platform',
+    tags: ['AI Agent', 'Infrastructure', 'Claude', 'Automation'],
+    website_url: 'https://openclaw.ai',
+    github_url: 'https://github.com/openclaw/openclaw',
+    creator_name: 'OpenClaw Team',
+    creator_twitter: 'clawdai',
+    tech_stack: ['TypeScript', 'Node.js', 'Claude'],
+    status: 'live',
+    built_by_ai: false,
+    featured: true,
+    upvotes: 156,
+    screenshot_urls: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   },
 ];
 
-const hackathonWins = [
-  {
-    name: 'onchain-hojayega',
-    description: 'Simplifying Web2 to Web3 transition by automating architecture planning with AI.',
-    url: 'https://onchain-hojayega.vercel.app/',
-    tags: ['🏆 Finalist ETH India 2024'],
-    links: { github: 'https://github.com/bhavyagor12/onchain-hojayega' },
-  },
-  {
-    name: 'Lumen',
-    description: 'Web3 MVP enabling product traceability and tokenized sustainability on Base.',
-    url: 'https://ilumen.earth/',
-    tags: ['🏆 Finalist Based India 2024', '💰 Raising VC'],
-  },
-  {
-    name: 'ezframes',
-    description: 'No-code Farcaster Frames builder. Create and manage frames through a dashboard.',
-    url: 'https://www.ezframes.xyz/',
-    tags: ['🏆 Onchain Summer 2024', '🏆 ETH Mumbai 2024', '💰 Gitcoin Grants'],
-  },
-  {
-    name: 'Scaffold Essential',
-    description: 'Tool that simplifies starting projects with Next.js and Pint (DSL for Rust).',
-    url: 'https://scaffold-essential.vercel.app/',
-    tags: ['🏆 ETH Bangkok 2024', 'Developer Tooling'],
-    links: { github: 'https://github.com/ScaffoldEssential/scaffold-essential' },
-  },
-];
-
-const experience = [
-  {
-    role: 'Former Founding Engineer',
-    company: 'niti.ai',
-    period: 'Oct 2022 - Jan 2025',
-    description: 'Second engineering hire. Built AI-driven SaaS for product managers - in-app marketing, analytics, and user engagement tools.',
-    url: 'https://www.niti.ai',
-    current: false,
-  },
-  {
-    role: 'Full Stack Developer',
-    company: 'Front Door',
-    period: 'May 2022 - Sep 2022',
-    description: 'Web3-powered recruitment platform with smart contracts and on-chain reputation. Built frontend and Solidity contracts.',
-  },
-];
-
-const skills = [
-  { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'] },
-  { category: 'Web3', items: ['Solidity', 'Hardhat', 'Foundry', 'ethers.js', 'wagmi'] },
-  { category: 'Backend', items: ['Node.js', 'Python', 'PostgreSQL', 'Supabase'] },
-  { category: 'AI/ML', items: ['OpenAI', 'Grok', 'LangChain', 'HeyGen'] },
-  { category: 'Chains', items: ['Base', 'Ethereum', 'Polygon', 'Farcaster'] },
+const categories = [
+  { id: 'all', label: 'All', icon: Sparkles },
+  { id: 'agent', label: 'Agents', icon: Sparkles },
+  { id: 'tool', label: 'Tools', icon: Sparkles },
+  { id: 'platform', label: 'Platforms', icon: Sparkles },
+  { id: 'template', label: 'Templates', icon: Sparkles },
+  { id: 'integration', label: 'Integrations', icon: Sparkles },
 ];
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState('');
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('all');
+  const [projects, setProjects] = useState<Project[]>(demoProjects);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['shipped', 'hackathons', 'experience', 'skills'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el && el.getBoundingClientRect().top < 200) {
-          setActiveSection(section);
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const filteredProjects = projects.filter((p) => {
+    const matchesSearch =
+      search === '' ||
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.tagline.toLowerCase().includes(search.toLowerCase()) ||
+      p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+    const matchesCategory = category === 'all' || p.category === category;
+    return matchesSearch && matchesCategory;
+  });
+
+  const featuredProjects = filteredProjects.filter((p) => p.featured);
+  const regularProjects = filteredProjects.filter((p) => !p.featured);
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Floating Nav */}
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-full px-6 py-2 hidden md:flex gap-6 text-sm">
-        <a href="#shipped" className={`hover:text-orange-400 transition ${activeSection === 'shipped' ? 'text-orange-400' : 'text-zinc-400'}`}>Shipped with AI</a>
-        <a href="#hackathons" className={`hover:text-orange-400 transition ${activeSection === 'hackathons' ? 'text-orange-400' : 'text-zinc-400'}`}>Hackathons</a>
-        <a href="#experience" className={`hover:text-orange-400 transition ${activeSection === 'experience' ? 'text-orange-400' : 'text-zinc-400'}`}>Experience</a>
-        <a href="#skills" className={`hover:text-orange-400 transition ${activeSection === 'skills' ? 'text-orange-400' : 'text-zinc-400'}`}>Skills</a>
+      {/* Nav */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-zinc-900">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <a href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
+              <Rocket className="w-4 h-4 text-black" />
+            </div>
+            <span className="font-bold text-lg">shipped<span className="text-orange-400">by</span>ai</span>
+          </a>
+          <div className="flex items-center gap-4">
+            <a href="/about" className="text-sm text-zinc-400 hover:text-white transition">About</a>
+            <a
+              href="/submit"
+              className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-black font-medium text-sm rounded-lg transition"
+            >
+              <Plus className="w-4 h-4" />
+              Submit Project
+            </a>
+          </div>
+        </div>
       </nav>
 
       {/* Hero */}
-      <header className="relative overflow-hidden">
+      <header className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-purple-500/10" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-orange-500/20 rounded-full blur-3xl -translate-y-1/2" />
-        
-        <div className="relative max-w-5xl mx-auto px-6 pt-32 pb-24">
-          <div className="flex items-center gap-2 text-orange-400 text-sm font-medium mb-4">
-            <Sparkles className="w-4 h-4" />
-            <span>Shipping products with AI agents</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
-            Bhavya Gor
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-zinc-400 max-w-2xl mb-8">
-            Curious developer who loves building things. 
-            Shipping Web3 products and winning hackathons.
-          </p>
-          
-          <div className="flex items-center gap-4 mb-12">
-            <a href="https://x.com/bhavya_gor" target="_blank" rel="noopener noreferrer" 
-               className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-colors group">
-              <Twitter className="w-5 h-5 group-hover:text-orange-400" />
-            </a>
-            <a href="https://github.com/bhavyagor12" target="_blank" rel="noopener noreferrer"
-               className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-colors group">
-              <Github className="w-5 h-5 group-hover:text-orange-400" />
-            </a>
-            <a href="https://linkedin.com/in/bhavya-gor" target="_blank" rel="noopener noreferrer"
-               className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-colors group">
-              <Linkedin className="w-5 h-5 group-hover:text-orange-400" />
-            </a>
-            <a href="mailto:bhavya.gor9999@gmail.com"
-               className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-colors group">
-              <Mail className="w-5 h-5 group-hover:text-orange-400" />
-            </a>
-            <a href="https://app.buidlguidl.com/builders/0x95E08FA8ac4301acC5b943f860Cd8AC84433e3CF" target="_blank" rel="noopener noreferrer"
-               className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-colors group">
-              <Globe className="w-5 h-5 group-hover:text-orange-400" />
-            </a>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-orange-500/20 rounded-full blur-3xl -translate-y-1/2" />
+
+        <div className="relative max-w-6xl mx-auto px-6 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-full text-sm text-zinc-400 mb-6">
+            <Sparkles className="w-4 h-4 text-orange-400" />
+            Discover projects built by AI agents & humans
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap gap-8">
-            <div>
-              <div className="text-3xl font-bold text-orange-400">5+</div>
-              <div className="text-sm text-zinc-500">Hackathon Wins</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-orange-400">4</div>
-              <div className="text-sm text-zinc-500">Shipped with AI</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-orange-400">2+</div>
-              <div className="text-sm text-zinc-500">Years Building</div>
-            </div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
+            Shipped by AI
+          </h1>
+
+          <p className="text-xl text-zinc-400 max-w-2xl mx-auto mb-10">
+            The marketplace for AI-built projects. Discover tools, agents, and platforms 
+            shipped by humans collaborating with AI — from idea to production.
+          </p>
+
+          {/* Search */}
+          <div className="max-w-xl mx-auto relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+            <input
+              type="text"
+              placeholder="Search projects, tags, or tech..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-zinc-900 border border-zinc-800 rounded-2xl text-white placeholder-zinc-500 focus:outline-none focus:border-orange-500/50 transition"
+            />
           </div>
         </div>
       </header>
 
-      {/* Shipped with AI Section */}
-      <section id="shipped" className="max-w-5xl mx-auto px-6 py-20">
-        <div className="flex items-center gap-3 mb-2">
-          <Zap className="w-6 h-6 text-orange-400" />
-          <h2 className="text-3xl font-bold">Shipped with AI</h2>
-        </div>
-        <p className="text-zinc-500 mb-8">Products built collaboratively with AI agents. From idea to production in hours, not weeks.</p>
-        
-        <div className="grid md:grid-cols-2 gap-4">
-          {shippedWithAI.map((project) => (
-            <a
-              key={project.name}
-              href={project.url || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block p-6 bg-gradient-to-br from-zinc-900 to-zinc-900/50 border border-zinc-800 hover:border-orange-500/50 rounded-2xl transition-all hover:shadow-lg hover:shadow-orange-500/10"
+      {/* Categories */}
+      <section className="max-w-6xl mx-auto px-6 pb-8">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setCategory(cat.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition ${
+                category === cat.id
+                  ? 'bg-orange-500 text-black'
+                  : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800'
+              }`}
             >
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-lg font-semibold group-hover:text-orange-400 transition-colors">
-                  {project.name}
-                </h3>
-                <span className={`text-xs px-2 py-1 rounded-full ${project.status === 'live' ? 'bg-green-500/20 text-green-400' : 'bg-blue-500/20 text-blue-400'}`}>
-                  {project.status}
-                </span>
-              </div>
-              <p className="text-zinc-400 text-sm mb-4">{project.description}</p>
-              <div className="flex gap-2 flex-wrap">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="px-2 py-1 bg-orange-500/10 text-orange-400 text-xs rounded-lg">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </a>
+              {cat.label}
+            </button>
           ))}
         </div>
       </section>
 
-      {/* Hackathon Wins */}
-      <section id="hackathons" className="max-w-5xl mx-auto px-6 py-20">
-        <div className="flex items-center gap-3 mb-2">
-          <Trophy className="w-6 h-6 text-orange-400" />
-          <h2 className="text-3xl font-bold">Hackathon Wins</h2>
-        </div>
-        <p className="text-zinc-500 mb-8">Building under pressure, shipping fast, and winning prizes.</p>
-        
-        <div className="grid gap-4">
-          {hackathonWins.map((project) => (
-            <a
-              key={project.name}
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col md:flex-row md:items-center justify-between p-6 bg-zinc-900/50 hover:bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-2xl transition-all"
-            >
-              <div className="mb-4 md:mb-0">
-                <h3 className="text-lg font-semibold group-hover:text-orange-400 transition-colors mb-2">
-                  {project.name}
-                </h3>
-                <p className="text-zinc-400 text-sm">{project.description}</p>
-              </div>
-              <div className="flex gap-2 flex-wrap md:ml-4">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="px-3 py-1 bg-zinc-800 text-zinc-300 text-xs rounded-full whitespace-nowrap">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </a>
-          ))}
+      {/* Stats */}
+      <section className="max-w-6xl mx-auto px-6 pb-12">
+        <div className="flex items-center gap-8 text-sm text-zinc-500">
+          <span><span className="text-white font-semibold">{projects.length}</span> projects</span>
+          <span><span className="text-white font-semibold">{projects.filter(p => p.built_by_ai).length}</span> AI-built</span>
+          <span><span className="text-white font-semibold">{projects.filter(p => p.status === 'live').length}</span> live</span>
         </div>
       </section>
 
-      {/* Experience */}
-      <section id="experience" className="max-w-5xl mx-auto px-6 py-20">
-        <div className="flex items-center gap-3 mb-8">
-          <Briefcase className="w-6 h-6 text-orange-400" />
-          <h2 className="text-3xl font-bold">Experience</h2>
-        </div>
-        
-        <div className="space-y-8">
-          {experience.map((exp, i) => (
-            <div key={i} className="relative pl-8 border-l-2 border-zinc-800">
-              <div className="absolute left-0 top-0 w-4 h-4 bg-orange-500 rounded-full -translate-x-[9px]" />
-              {exp.current && (
-                <span className="inline-block px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full mb-2">Current</span>
-              )}
-              <div className="text-sm text-orange-400 mb-1">{exp.period}</div>
-              <h3 className="text-xl font-semibold">{exp.role}</h3>
-              <a href={exp.url} target="_blank" rel="noopener noreferrer" className="text-zinc-500 text-sm mb-3 hover:text-orange-400 transition">
-                {exp.company} ↗
-              </a>
-              <p className="text-zinc-400 mt-2">{exp.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Featured Projects */}
+      {featuredProjects.length > 0 && (
+        <section className="max-w-6xl mx-auto px-6 pb-12">
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-orange-400" />
+            Featured
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} featured />
+            ))}
+          </div>
+        </section>
+      )}
 
-      {/* Skills */}
-      <section id="skills" className="max-w-5xl mx-auto px-6 py-20">
-        <div className="flex items-center gap-3 mb-8">
-          <Code className="w-6 h-6 text-orange-400" />
-          <h2 className="text-3xl font-bold">Tech Stack</h2>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skills.map((skill) => (
-            <div key={skill.category} className="p-6 bg-zinc-900/50 border border-zinc-800 rounded-2xl">
-              <h3 className="text-sm font-medium text-orange-400 mb-4">{skill.category}</h3>
-              <div className="flex flex-wrap gap-2">
-                {skill.items.map((item) => (
-                  <span key={item} className="px-3 py-1.5 bg-zinc-800 text-zinc-300 text-sm rounded-lg">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* All Projects */}
+      <section className="max-w-6xl mx-auto px-6 pb-20">
+        <h2 className="text-lg font-semibold mb-4">All Projects</h2>
+        {regularProjects.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {regularProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-zinc-500">
+            No projects found matching your search.
+          </div>
+        )}
       </section>
 
       {/* CTA */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
-        <div className="p-8 md:p-12 bg-gradient-to-br from-orange-500/20 to-purple-500/20 border border-orange-500/30 rounded-3xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Let's Build Something</h2>
-          <p className="text-zinc-400 mb-6 max-w-lg mx-auto">
-            Looking to collaborate on Web3 projects, AI experiments, or just want to chat about the future of tech.
-          </p>
-          <a 
-            href="https://calendly.com/bhavya-gor9999/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-xl transition-colors"
-          >
-            <ExternalLink className="w-4 h-4" />
-            Book a Call
-          </a>
+      <section className="max-w-6xl mx-auto px-6 pb-20">
+        <div className="p-8 md:p-12 bg-gradient-to-br from-orange-500/20 to-purple-500/20 border border-orange-500/30 rounded-3xl">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl font-bold mb-4">Ship Your Project</h2>
+            <p className="text-zinc-400 mb-6">
+              Built something cool with AI? Add a <code className="px-2 py-1 bg-zinc-800 rounded text-orange-400">REGISTER.md</code> to 
+              your repo and let your agent submit it — or use our form.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="/submit"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-xl transition"
+              >
+                Submit Project
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href="https://github.com/bhavyaalt/shippedbyai/blob/main/REGISTER.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl transition"
+              >
+                View REGISTER.md Template
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-zinc-900 py-12">
-        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-zinc-600 text-sm">
-            Built with ⚡ by Bhavya + AI agents
-          </p>
-          <div className="flex items-center gap-4 text-zinc-600 text-sm">
-            <a href="https://shippedbyai.com" className="hover:text-orange-400 transition">shippedbyai.com</a>
-            <span>•</span>
-            <a href="https://crabnews.shippedbyai.com" className="hover:text-orange-400 transition">CrabNews</a>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
+              <Rocket className="w-3 h-3 text-black" />
+            </div>
+            <span className="text-zinc-600 text-sm">shippedbyai.com</span>
           </div>
+          <p className="text-zinc-600 text-sm">
+            Built with ⚡ by humans + AI agents
+          </p>
         </div>
       </footer>
     </div>
