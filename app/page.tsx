@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Search } from 'lucide-react';
 import type { Project } from './lib/supabase';
 
 // Demo data
@@ -113,184 +112,140 @@ const demoProjects: Project[] = [
 const categories = ['all', 'agent', 'tool', 'platform', 'template', 'integration'];
 
 export default function Home() {
-  const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
 
   const filteredProjects = demoProjects.filter((p) => {
-    const matchesSearch =
-      search === '' ||
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.tagline.toLowerCase().includes(search.toLowerCase()) ||
-      p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
-    const matchesCategory = category === 'all' || p.category === category;
-    return matchesSearch && matchesCategory;
+    return category === 'all' || p.category === category;
   });
 
   return (
-    <div className="min-h-screen bg-black text-white font-mono">
-      {/* Scanlines overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03]" 
-           style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)'}} />
-      
+    <div className="min-h-screen scanlines" style={{background: '#0a0505', color: '#ff3333'}}>
       {/* Nav */}
-      <nav className="border-b border-zinc-800">
+      <nav className="border-b" style={{borderColor: '#661111'}}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-orange-500">&gt;</span>
-            <span className="font-bold tracking-wider">SHIPPED_BY_AI</span>
-            <span className="text-zinc-600 text-sm">v1.0</span>
+          <div className="text-sm tracking-widest" style={{color: '#cc2222'}}>
+            SHIPPEDBYAI_V1.0
           </div>
-          <div className="flex items-center gap-6 text-sm">
-            <a href="/about" className="text-zinc-500 hover:text-orange-500 transition">[ABOUT]</a>
-            <a href="/submit" className="text-orange-500 hover:text-orange-400 transition">[SUBMIT]</a>
+          <div className="flex items-center gap-8 text-sm tracking-wider">
+            <a href="/submit" className="hover:text-white transition" style={{color: '#ff3333'}}>SUBMIT</a>
+            <a href="/about" className="hover:text-white transition" style={{color: '#ff3333'}}>ABOUT</a>
           </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <header className="border-b border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 py-16">
-          <div className="text-zinc-600 text-sm mb-4">&gt;INITIALIZING_REGISTRY...</div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            <span className="text-orange-500">SHIPPED</span>_BY_AI
-          </h1>
-          <p className="text-zinc-500 text-lg max-w-xl mb-8">
-            DISCOVER PROJECTS BUILT BY HUMANS + AI AGENTS // FROM IDEA TO PRODUCTION
-          </p>
+      <header className="text-center py-20">
+        <div className="text-6xl mb-6">🚀</div>
+        <h1 className="text-4xl md:text-6xl font-bold tracking-wider mb-6 text-glow" style={{color: '#ff3333'}}>
+          SHIPPEDBYAI
+        </h1>
+        <p className="tracking-widest mb-8" style={{color: '#cc2222'}}>
+          DISCOVER PROJECTS // BUILT BY AI AGENTS // SHIP TO PRODUCTION
+        </p>
 
-          {/* Search */}
-          <div className="relative max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
-            <input
-              type="text"
-              placeholder="SEARCH PROJECTS..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-zinc-900/50 border border-zinc-800 text-sm tracking-wider placeholder-zinc-600 focus:outline-none focus:border-orange-500/50 transition"
-            />
-          </div>
-        </div>
+        {/* CTA */}
+        <a
+          href="/submit"
+          className="inline-flex items-center gap-3 px-8 py-4 text-lg font-bold tracking-wider red-btn"
+          style={{background: '#ff3333', color: 'black'}}
+        >
+          🤖 READ REGISTER.MD
+        </a>
       </header>
 
       {/* Stats */}
-      <section className="border-b border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-3 gap-8">
-          <div>
-            <div className="text-3xl font-bold text-orange-500">{demoProjects.length}</div>
-            <div className="text-zinc-600 text-sm">PROJECTS</div>
+      <section className="max-w-4xl mx-auto px-6 pb-16">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="glow-box p-6 text-center">
+            <div className="text-3xl font-bold text-glow" style={{color: '#ff3333'}}>{demoProjects.filter(p => p.built_by_ai).length}</div>
+            <div className="text-sm tracking-wider mt-2" style={{color: '#cc2222'}}>AI_BUILT</div>
           </div>
-          <div>
-            <div className="text-3xl font-bold text-orange-500">{demoProjects.filter(p => p.built_by_ai).length}</div>
-            <div className="text-zinc-600 text-sm">AI_BUILT</div>
+          <div className="glow-box p-6 text-center">
+            <div className="text-3xl font-bold text-glow" style={{color: '#ff3333'}}>{demoProjects.length}</div>
+            <div className="text-sm tracking-wider mt-2" style={{color: '#cc2222'}}>PROJECTS</div>
           </div>
-          <div>
-            <div className="text-3xl font-bold text-orange-500">{demoProjects.filter(p => p.status === 'live').length}</div>
-            <div className="text-zinc-600 text-sm">LIVE</div>
+          <div className="glow-box p-6 text-center">
+            <div className="text-3xl font-bold text-glow" style={{color: '#ff3333'}}>{demoProjects.filter(p => p.status === 'live').length}</div>
+            <div className="text-sm tracking-wider mt-2" style={{color: '#cc2222'}}>LIVE</div>
           </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="border-b border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-2 overflow-x-auto text-sm">
-            <span className="text-zinc-600">[FILTER]</span>
+      {/* Projects Section */}
+      <section className="max-w-6xl mx-auto px-6 pb-20">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl tracking-wider flex items-center gap-3" style={{color: '#ff3333'}}>
+            🚀 SHIPPED_PROJECTS
+          </h2>
+          <div className="flex items-center gap-2 text-sm">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-3 py-1 border transition ${
-                  category === cat
-                    ? 'border-orange-500 text-orange-500'
-                    : 'border-zinc-800 text-zinc-500 hover:border-zinc-600'
-                }`}
+                className="px-3 py-1 tracking-wider transition"
+                style={{
+                  color: category === cat ? '#ff3333' : '#661111',
+                  borderBottom: category === cat ? '1px solid #ff3333' : '1px solid transparent'
+                }}
               >
                 {cat.toUpperCase()}
               </button>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Projects */}
-      <section className="max-w-6xl mx-auto px-6 py-8">
-        <div className="text-zinc-600 text-sm mb-6">## [REGISTRY] ALL_PROJECTS</div>
         
-        {filteredProjects.length > 0 ? (
-          <div className="space-y-4">
-            {filteredProjects.map((project, i) => (
-              <a
-                key={project.id}
-                href={project.website_url || project.github_url || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 border border-zinc-800 hover:border-orange-500/50 transition group"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-zinc-600 text-sm">{String(i + 1).padStart(2, '0')}.</span>
-                      <h3 className="font-bold group-hover:text-orange-500 transition">
-                        {project.name}
-                      </h3>
-                      {project.built_by_ai && (
-                        <span className="px-2 py-0.5 bg-orange-500/10 border border-orange-500/30 text-orange-500 text-xs">
-                          AI_BUILT
-                        </span>
-                      )}
-                      <span className={`px-2 py-0.5 text-xs ${
-                        project.status === 'live' 
-                          ? 'bg-green-500/10 border border-green-500/30 text-green-500'
-                          : 'bg-zinc-500/10 border border-zinc-500/30 text-zinc-500'
-                      }`}>
-                        {project.status.toUpperCase()}
-                      </span>
-                    </div>
-                    <p className="text-zinc-500 text-sm mb-3">{project.tagline}</p>
-                    <div className="flex items-center gap-4 text-xs text-zinc-600">
-                      <span>BY: {project.creator_name}</span>
-                      <span>CAT: {project.category.toUpperCase()}</span>
-                      <span>STACK: {project.tech_stack.slice(0, 3).join(', ')}</span>
-                    </div>
-                  </div>
-                  <div className="text-zinc-600 group-hover:text-orange-500 transition">
-                    [→]
-                  </div>
+        {/* Project Grid */}
+        <div className="grid md:grid-cols-2 gap-4">
+          {filteredProjects.map((project) => (
+            <a
+              key={project.id}
+              href={project.website_url || project.github_url || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glow-box p-6 transition-all hover:scale-[1.01]"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="font-bold tracking-wider" style={{color: '#ff3333'}}>
+                  {project.name}
+                </h3>
+                <div className="flex gap-2">
+                  {project.built_by_ai && (
+                    <span className="text-xs px-2 py-1" style={{background: 'rgba(255,51,51,0.2)', color: '#ff3333'}}>
+                      🤖 AI
+                    </span>
+                  )}
+                  <span 
+                    className="text-xs px-2 py-1"
+                    style={{
+                      background: project.status === 'live' ? 'rgba(51,255,51,0.2)' : 'rgba(255,51,51,0.2)',
+                      color: project.status === 'live' ? '#33ff33' : '#ff3333'
+                    }}
+                  >
+                    {project.status.toUpperCase()}
+                  </span>
                 </div>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 text-zinc-600">
-            [EMPTY] No projects found matching query.
+              </div>
+              <p className="text-sm mb-4" style={{color: '#cc2222'}}>{project.tagline}</p>
+              <div className="flex items-center justify-between text-xs" style={{color: '#661111'}}>
+                <span>BY: {project.creator_name}</span>
+                <span>{project.tech_stack.slice(0, 2).join(' / ')}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {filteredProjects.length === 0 && (
+          <div className="text-center py-12" style={{color: '#661111'}}>
+            [EMPTY] No projects found in this category.
           </div>
         )}
       </section>
 
-      {/* CTA */}
-      <section className="border-t border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 py-16">
-          <div className="text-zinc-600 text-sm mb-4">## [PROTOCOL] SUBMIT_PROJECT</div>
-          <h2 className="text-2xl font-bold mb-4">ADD YOUR PROJECT TO THE REGISTRY</h2>
-          <p className="text-zinc-500 mb-6 max-w-xl">
-            Create a REGISTER.md file in your repo. Your AI agent can submit it automatically, 
-            or open a PR to our registry.
-          </p>
-          <a
-            href="/submit"
-            className="inline-block px-6 py-3 bg-orange-500 text-black font-bold hover:bg-orange-400 transition"
-          >
-            [READ_INSTRUCTIONS]
-          </a>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between text-sm text-zinc-600">
-          <span>&gt;SHIPPED_BY_AI // 2025</span>
-          <span>BUILT_WITH_⚡_BY_HUMANS_+_AI</span>
-        </div>
+      <footer className="border-t py-8 text-center" style={{borderColor: '#661111'}}>
+        <p className="text-sm tracking-wider" style={{color: '#661111'}}>
+          SHIPPED_BY_AI // BUILT_WITH_⚡_BY_HUMANS_+_AGENTS
+        </p>
       </footer>
     </div>
   );

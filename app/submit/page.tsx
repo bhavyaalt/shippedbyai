@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 
 const registerMdTemplate = `---
@@ -47,57 +46,60 @@ export default function SubmitPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-mono">
-      {/* Scanlines overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03]" 
-           style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)'}} />
-      
+    <div className="min-h-screen scanlines" style={{background: '#0a0505', color: '#ff3333'}}>
       {/* Nav */}
-      <nav className="border-b border-zinc-800">
+      <nav className="border-b" style={{borderColor: '#661111'}}>
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-zinc-500 hover:text-orange-500 transition">[← BACK]</Link>
-          <div className="flex items-center gap-2">
-            <span className="text-orange-500">&gt;</span>
-            <span className="font-bold tracking-wider">SHIPPED_BY_AI</span>
+          <Link href="/" className="text-sm tracking-wider hover:text-white transition" style={{color: '#cc2222'}}>
+            ← BACK
+          </Link>
+          <div className="text-sm tracking-widest" style={{color: '#cc2222'}}>
+            SHIPPEDBYAI_V1.0
           </div>
         </div>
       </nav>
 
       <main className="max-w-4xl mx-auto px-6 py-16">
-        <div className="text-zinc-600 text-sm mb-4">&gt;LOADING_SUBMISSION_PROTOCOL...</div>
-        <h1 className="text-3xl font-bold mb-4">
-          <span className="text-orange-500">[SUBMIT]</span> REGISTER.MD
-        </h1>
-        <p className="text-zinc-500 mb-12">
-          ADD A REGISTER.MD FILE TO YOUR REPO // YOUR AGENT CAN SUBMIT IT AUTOMATICALLY
-        </p>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="text-5xl mb-6">🤖</div>
+          <h1 className="text-3xl font-bold tracking-wider mb-4 text-glow" style={{color: '#ff3333'}}>
+            REGISTER.MD
+          </h1>
+          <p className="tracking-widest" style={{color: '#cc2222'}}>
+            ADD YOUR PROJECT TO THE REGISTRY // AI AGENTS WELCOME
+          </p>
+        </div>
 
         {/* Steps */}
-        <div className="mb-12">
-          <div className="text-zinc-600 text-sm mb-6">## [PROTOCOL] HOW_IT_WORKS</div>
+        <div className="mb-16">
+          <h2 className="text-lg tracking-wider mb-6 flex items-center gap-3" style={{color: '#ff3333'}}>
+            📋 HOW_IT_WORKS
+          </h2>
           
-          <div className="space-y-6">
-            <div className="flex gap-4 p-6 border border-zinc-800">
-              <span className="text-orange-500 font-bold">01.</span>
+          <div className="space-y-4">
+            <div className="glow-box p-6 flex gap-4">
+              <span className="text-2xl font-bold" style={{color: '#ff3333'}}>01</span>
               <div>
-                <h3 className="font-bold mb-2">CREATE REGISTER.MD</h3>
-                <p className="text-zinc-500 text-sm">
+                <h3 className="font-bold tracking-wider mb-2" style={{color: '#ff3333'}}>CREATE REGISTER.MD</h3>
+                <p className="text-sm" style={{color: '#cc2222'}}>
                   Copy the template below. Fill in your project details. Place it in your repo root.
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-4 p-6 border border-zinc-800">
-              <span className="text-orange-500 font-bold">02.</span>
+            <div className="glow-box p-6 flex gap-4">
+              <span className="text-2xl font-bold" style={{color: '#ff3333'}}>02</span>
               <div>
-                <h3 className="font-bold mb-2">SUBMIT TO REGISTRY</h3>
-                <p className="text-zinc-500 text-sm">
+                <h3 className="font-bold tracking-wider mb-2" style={{color: '#ff3333'}}>SUBMIT TO REGISTRY</h3>
+                <p className="text-sm" style={{color: '#cc2222'}}>
                   Open a PR to{' '}
                   <a 
                     href="https://github.com/bhavyaalt/shippedbyai-registry" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-orange-500 hover:underline"
+                    className="underline hover:text-white"
+                    style={{color: '#ff3333'}}
                   >
                     shippedbyai-registry
                   </a>
@@ -106,12 +108,12 @@ export default function SubmitPage() {
               </div>
             </div>
 
-            <div className="flex gap-4 p-6 border border-zinc-800">
-              <span className="text-orange-500 font-bold">03.</span>
+            <div className="glow-box p-6 flex gap-4">
+              <span className="text-2xl font-bold" style={{color: '#ff3333'}}>03</span>
               <div>
-                <h3 className="font-bold mb-2">GET FEATURED</h3>
-                <p className="text-zinc-500 text-sm">
-                  Once merged, your project appears on shippedbyai.com. AI-built projects get special badges.
+                <h3 className="font-bold tracking-wider mb-2" style={{color: '#ff3333'}}>GET FEATURED</h3>
+                <p className="text-sm" style={{color: '#cc2222'}}>
+                  Once merged, your project appears on shippedbyai.com. AI-built projects get 🤖 badges.
                 </p>
               </div>
             </div>
@@ -119,51 +121,58 @@ export default function SubmitPage() {
         </div>
 
         {/* Template */}
-        <div className="mb-12">
+        <div className="mb-16">
           <div className="flex items-center justify-between mb-4">
-            <div className="text-zinc-600 text-sm">## [TEMPLATE] REGISTER.MD</div>
+            <h2 className="text-lg tracking-wider flex items-center gap-3" style={{color: '#ff3333'}}>
+              📄 TEMPLATE
+            </h2>
             <button
               onClick={copyTemplate}
-              className="flex items-center gap-2 px-4 py-2 border border-zinc-800 hover:border-orange-500 text-sm transition"
+              className="px-4 py-2 text-sm tracking-wider transition red-btn"
+              style={{background: copied ? '#33ff33' : '#ff3333', color: 'black'}}
             >
-              {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'COPIED' : 'COPY'}
+              {copied ? '✓ COPIED' : 'COPY'}
             </button>
           </div>
-          <pre className="p-6 bg-zinc-900/50 border border-zinc-800 text-sm text-zinc-400 overflow-x-auto">
-            {registerMdTemplate}
-          </pre>
+          <div className="glow-box p-6">
+            <pre className="text-sm overflow-x-auto" style={{color: '#cc2222'}}>
+              {registerMdTemplate}
+            </pre>
+          </div>
         </div>
 
         {/* Agent Instructions */}
-        <div className="p-6 border border-orange-500/30 bg-orange-500/5">
-          <div className="text-orange-500 text-sm mb-4">## [FOR_AGENTS] AUTO_SUBMIT</div>
-          <ol className="text-sm text-zinc-400 space-y-2">
-            <li><span className="text-orange-500">01.</span> Create REGISTER.md with the YAML frontmatter format</li>
-            <li><span className="text-orange-500">02.</span> Fork bhavyaalt/shippedbyai-registry</li>
-            <li><span className="text-orange-500">03.</span> Add to projects/your-project-name/REGISTER.md</li>
-            <li><span className="text-orange-500">04.</span> Open PR with title: "Add: Your Project Name"</li>
+        <div className="glow-box p-6 mb-16" style={{borderColor: '#ff3333'}}>
+          <h2 className="text-lg tracking-wider mb-4 flex items-center gap-3" style={{color: '#ff3333'}}>
+            🤖 FOR_AGENTS
+          </h2>
+          <ol className="text-sm space-y-2" style={{color: '#cc2222'}}>
+            <li><span style={{color: '#ff3333'}}>01.</span> Create REGISTER.md with YAML frontmatter</li>
+            <li><span style={{color: '#ff3333'}}>02.</span> Fork bhavyaalt/shippedbyai-registry</li>
+            <li><span style={{color: '#ff3333'}}>03.</span> Add to projects/your-project-name/REGISTER.md</li>
+            <li><span style={{color: '#ff3333'}}>04.</span> Open PR: "Add: Your Project Name"</li>
           </ol>
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
+        <div className="text-center">
           <a
             href="https://github.com/bhavyaalt/shippedbyai-registry"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-orange-500 text-black font-bold hover:bg-orange-400 transition"
+            className="inline-flex items-center gap-3 px-8 py-4 text-lg font-bold tracking-wider red-btn"
+            style={{background: '#ff3333', color: 'black'}}
           >
-            [OPEN_REGISTRY]
+            🚀 OPEN_REGISTRY
           </a>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8">
-        <div className="max-w-4xl mx-auto px-6 text-center text-sm text-zinc-600">
-          &gt;SHIPPED_BY_AI // BUILT_WITH_⚡_BY_HUMANS_+_AI
-        </div>
+      <footer className="border-t py-8 text-center" style={{borderColor: '#661111'}}>
+        <p className="text-sm tracking-wider" style={{color: '#661111'}}>
+          SHIPPED_BY_AI // BUILT_WITH_⚡_BY_HUMANS_+_AGENTS
+        </p>
       </footer>
     </div>
   );

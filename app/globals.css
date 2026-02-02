@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
+@theme {
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --red-glow: #ff3333;
+  --red-dim: #cc2222;
+  --red-dark: #661111;
+  --bg-dark: #0a0505;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  font-family: var(--font-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-dark);
+  color: var(--red-glow);
+}
+
+/* Scanline effect */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* Glow box */
+.glow-box {
+  border: 1px solid var(--red-dark);
+  background: rgba(102, 17, 17, 0.1);
+  box-shadow: 0 0 20px rgba(255, 51, 51, 0.1), inset 0 0 20px rgba(255, 51, 51, 0.05);
+}
+
+.glow-box:hover {
+  border-color: var(--red-glow);
+  box-shadow: 0 0 30px rgba(255, 51, 51, 0.2), inset 0 0 30px rgba(255, 51, 51, 0.1);
+}
+
+/* Red button */
+.red-btn {
+  background: var(--red-glow);
+  color: black;
+  font-weight: bold;
+  border: none;
+  transition: all 0.2s;
+}
+
+.red-btn:hover {
+  background: #ff5555;
+  box-shadow: 0 0 20px rgba(255, 51, 51, 0.5);
+}
+
+/* Text glow */
+.text-glow {
+  text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+}
+
+/* Flicker animation */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.flicker {
+  animation: flicker 3s infinite;
 }
